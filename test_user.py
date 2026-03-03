@@ -9,7 +9,7 @@ def test_create_user():
     assert response.json()["name"] == "Seto"
 
 def test_get_user():
-    client.post("/users", json={"id": 2, "name": "Test"})
+    client.post("/users", json={"id": 2, "name": "Nilay"})
     response = client.get("/users/2")
     assert response.status_code == 200
     assert response.json()["id"] == 2
