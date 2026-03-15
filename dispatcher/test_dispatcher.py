@@ -33,6 +33,10 @@ def test_request_without_autharization_header_returns_401():
     res = client.get("/users/2")
     assert res.status_code==401
     assert res.json()["detail"]=="Authorization header missing"
+def test_invalid_authorization_format_returns_401():
+    res=client.get("/users/2",headers={"Authorization":"invalidtoken"})
+    assert res.status_code==401
+    assert res.json()["detail"] == "Invalid authorization format"
     
 
 
