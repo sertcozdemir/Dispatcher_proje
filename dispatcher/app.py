@@ -27,3 +27,8 @@ def validate_auth_header(request: Request):
             status_code=401,
             detail="Authorization header missing"
         )
+    if not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=401,
+            detail="İnvalid Authorization format"
+        )
