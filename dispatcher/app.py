@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response,HTTPException
 import httpx
 app=FastAPI()
 USER_SERVICE_BASE="http://localhost:8001"
