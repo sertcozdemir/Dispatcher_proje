@@ -37,6 +37,12 @@ def test_invalid_authorization_format_returns_401():
     res=client.get("/users/2",headers={"Authorization":"invalidtoken"})
     assert res.status_code==401
     assert res.json()["detail"] == "Invalid authorization format"
-    
+def test_invalid_token_returns_401(monkeypatch):
+    def fake_validate(token):
+        return False
+    monkeypatch.setattr(dispatcher_app,"is_token_valid", fake_validate)
+    res = client.get("/users/2",headers={"Authorization":"Bearer wrongtoken"})
+    assert res.status_code==401
+    assert res.json()["detail"]=="Invalid Token"
 
 

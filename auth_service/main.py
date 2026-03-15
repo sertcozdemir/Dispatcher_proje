@@ -17,10 +17,10 @@ def login(data: LoginRequest):
         return {
             "access_token":VALID_TOKEN,
             "token_type":"bearer"
-        }
+        }   
     raise HTTPException(status_code=401, detail="Invalid username or password")
 @app.post("/validate")
 def validate_token(data: TokenRequest):
     if data.token==VALID_TOKEN:
         return {"valid":True}
-    raise HTTPException(status_code=401,detail="Invalid token")
+    raise HTTPException(status_code=401,detail="Invalid Token")
