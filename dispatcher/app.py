@@ -12,3 +12,9 @@ def proxy_get_user(user_id: int,request:Request):
     upstream_url=f"{USER_SERVICE_BASE}/users/{user_id}"
     r = forward_request("GET",upstream_url,headers=dict(request.headers))
     return Response(content=r.text,status_code=r.status_code,media_type="application/json")
+PRODUCT_SERVICE_BASE="http://localhost:8002"
+@app.get("/products/{product_id}")
+def proxy_get_product(product_id: int,request:Request):
+    upstream_url = f"{PRODUCT_SERVICE_BASE}/products/{product_id}"
+    r=forward_request("GET",upstream_url,headers=dict(request.headers))
+    return Response(content=r.text,status_code=r.status_code,media_type="application/json")
