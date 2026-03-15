@@ -28,6 +28,8 @@ def test_route_products_to_product_service(monkeypatch):
     assert res.status_code == 200
     assert res.json()["id"]==5
     assert res.json()["name"] == "Keyboard"
+def test_request_without_autharization_header_returns_401():
+    res = client.get("/users/2")
     
 
 
