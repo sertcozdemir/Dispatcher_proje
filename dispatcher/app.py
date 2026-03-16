@@ -4,6 +4,13 @@ app=FastAPI()
 USER_SERVICE_BASE="http://localhost:8001"
 def forward_request(method:str,url:str,headers=None,json=None):
     return httpx.request(method,url,headers=headers,json=json,timeout=5.0)
+def is_token_valid(token: str) -> bool:
+    response=httpx.post(
+        f"{AUTH_SERVICE_BASE}/validate",
+        json={"token":token},
+        timeout=5.0
+    )
+    return response.status_code==200
 @app.get("/health")
 def health():
     return {"status":"ok"}
@@ -30,5 +37,12 @@ def validate_auth_header(request: Request):
     if not auth_header.startswith("Bearer "):
         raise HTTPException(
             status_code=401,
-            detail="İnvalid Authorization format"
+            detail="Invalid Authorization format"
         )
+    token= auth_header.split(" ", 1)[1]
+    if not is_token_valid(token):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
+AUTH_SERVICE_BASE="http://localhost:8003"

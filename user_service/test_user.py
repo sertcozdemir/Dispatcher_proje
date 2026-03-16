@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
-from main import app
-import main,pytest
+from user_service.main import app
+import user_service.main as main,pytest
 client = TestClient(app)
 @pytest.fixture(autouse=True)
 def clean_db():
@@ -26,3 +26,18 @@ def test_get_user():
 def test_user_not_found():
     response = client.get("/users/999")
     assert response.status_code == 404
+def test_route_users_to_user_service(monkeypatch):
+    def fake_post(url, headers=None,json=None):
+        class FakeAuthResp:
+            status_code=200
+        return FakeAuthResp()
+    def fake_request(method,url, headers=None, json=None,timeout=None):
+        class FakeUserResp:
+            status_code=200
+            text='{"id":2,"name":"Test"}'
+        return FakeUserResp()
+    monkeypatch.setattr(dispatcher_app.httpx,"post",fake_post)
+    monkeypatch.setattr(dispatcher_app.httpx,"is_token_valid",fake_request)
+    res=client.get("/users/2",headers={"Authorization":"Bearer validtoken"})
+    assert res.status_code==200
+    assert res.json()["id"]==2
