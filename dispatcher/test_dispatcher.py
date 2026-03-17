@@ -64,5 +64,13 @@ def test_login_and_access_users(monkeypatch):
         class FakeAuthResp:
             status_code=200
         return FakeAuthResp()
+    def fake_request(method,url,headers=None,json=None,timeout=None):
+        class FakeUserResp:
+            status_code=200
+            text='{"id":2,"name":"Seto"}'
+        return FakeUserResp()
+    monkeypatch.setattr(dispatcher_app.httpx,"post",fake_post)
+    monkeypatch.setattr(dispatcher_app.httpx,"request",fake_request)
+    res=client.get("/users/2",headers={"Authorization":"Bearer mysecrettoken"})
 
 
