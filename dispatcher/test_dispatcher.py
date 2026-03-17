@@ -59,5 +59,10 @@ def test_invalid_token_returns_401(monkeypatch):
     res = client.get("/users/2",headers={"Authorization":"Bearer wrongtoken"})
     assert res.status_code==401
     assert res.json()["detail"]=="Invalid Token"
+def test_login_and_access_users(monkeypatch):
+    def fake_post(url,json=None,timeout=None):
+        class FakeAuthResp:
+            status_code=200
+        return FakeAuthResp()
 
 
