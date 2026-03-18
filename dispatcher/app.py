@@ -1,19 +1,19 @@
 from fastapi import FastAPI, Request, Response,HTTPException
 import httpx
-app=FastAPI()
-USER_SERVICE_BASE="http://localhost:8001"
+app=FastAPI() # api gateway
+USER_SERVICE_BASE="http://localhost:8001" # user service mikroservis adresi
 def forward_request(method:str,url:str,headers=None,json=None):
-    return httpx.request(method,url,headers=headers,json=json,timeout=5.0)
+    return httpx.request(method,url,headers=headers,json=json,timeout=5.0) #Başka bir servise istek gönderir
 def is_token_valid(token: str) -> bool:
     response=httpx.post(
         f"{AUTH_SERVICE_BASE}/validate",
         json={"token":token},
         timeout=5.0
-    )
+    )# auth service e token geçerli mi so rusu 200 true 401 false 
     return response.status_code==200
 @app.get("/health")
 def health():
-    return {"status":"ok"}
+    return {"status":"ok"} # servis calısıyor mu kontrolü
 @app.get("/users/{user_id}")
 def proxy_get_user(user_id: int,request:Request):
     validate_auth_header(request)
