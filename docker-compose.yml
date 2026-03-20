@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  dispatcher:
+    build: ./dispatcher
+    container_name: dispatcher
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user_service
+      - product_service
+      - auth_service
+    networks:
+      - micro_net
+
+  user_service:
+    build: ./user_service
+    container_name: user_service
+    depends_on:
+      - mongo_user
+    networks:
+      - micro_net
+    ports:
+      - "8001:8001"
+
+  product_service:
+    build: ./product_service
+    container_name: product_service
+    depends_on:
+      - mongo_product
+    networks:
+      - micro_net
+
+  auth_service:
+    build: ./auth_service
+    container_name: auth_service
+    networks:
+      - micro_net
+    ports:
+      - "8003:8003"
+
+  mongo_user:
+    image: mongo:7
+    container_name: mongo_user
+    ports:
+      - "27017:27017"
+    networks:
+      - micro_net
+
+  mongo_product:
+    image: mongo:7
+    container_name: mongo_product
+    ports:
+      - "27018:27017"
+    networks:
+      - micro_net
+
+networks:
+  micro_net:
+    driver: bridge

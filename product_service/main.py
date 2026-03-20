@@ -5,7 +5,7 @@ from pymongo import MongoClient
 app = FastAPI()
 
 # Mongo bağlantısı
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb://mongo_product:27017/")
 db = client["product_db"]
 collection = db["products"]
 

@@ -3,9 +3,9 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import httpx
 app=FastAPI() # api gateway
 security=HTTPBearer()
-USER_SERVICE_BASE="http://localhost:8001" # user service mikroservis adresi
-PRODUCT_SERVICE_BASE="http://localhost:8002"
-AUTH_SERVICE_BASE="http://localhost:8003"
+USER_SERVICE_BASE="http://user_service:8001" # user service mikroservis adresi
+PRODUCT_SERVICE_BASE="http://product_service:8002"
+AUTH_SERVICE_BASE="http://auth_service:8003"
 def forward_request(method:str,url:str,headers=None,json=None):
     return httpx.request(method,url,headers=headers,json=json,timeout=5.0) #Başka bir servise istek gönderir
 def is_token_valid(token: str) -> bool:
