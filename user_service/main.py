@@ -29,6 +29,8 @@ def create_user(user: User):
         "email":user.email
     }
     result = collection.insert_one(new_user)
+    print("INSERTED ID:",result.inserted_id)
+    print("INSERTED DOC:",new_user)
     new_user["_id"]= str(result.inserted_id)
     new_user.pop("_id",None)
     return {

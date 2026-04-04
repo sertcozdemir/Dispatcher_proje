@@ -42,12 +42,16 @@ services:
     container_name: mongo_user
     networks:
       - micro_net
+    ports:
+      - "27017:27017"
 
   mongo_product:
     image: mongo:7
     container_name: mongo_product
     networks:
       - micro_net
+    ports:
+      - "27018:27017"
 
 networks:
   micro_net:
