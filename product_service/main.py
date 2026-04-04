@@ -10,19 +10,45 @@ db = client["product_db"]
 collection = db["products"]
 
 # Model
-class Product(BaseModel):
-    id: int
+class ProductCreate(BaseModel):
     name: str
     price: float
+    stock: int
+    category: str
+class ProductResponse(BaseModel):
+    id: int
+    name:str
+    price:float
+    stock: int
+    category:str
+
 
 # Ürün ekleme
-@app.post("/products", status_code=201)
-def create_product(product: Product):
-    if collection.find_one({"id": product.id}):
-        raise HTTPException(status_code=400, detail="Product already exists")
-
-    collection.insert_one(product.model_dump())
-    return product
+@app.post("/products", status_code=201,
+          response_model=ProductResponse,
+          responses={
+              201:{
+                  "description":"Prod Created Succesfully"
+              }
+          },summary="Create Product")
+def create_product(product: ProductCreate):
+    last_product=collection.find_one(sort=[("id",-1)])
+    new_id= 1 if last_product is None else last_product["id"]+1
+    new_product={
+        "id":new_id,
+        "name":product.name,
+        "price":product.price,
+        "stock":product.stock,
+        "category":product.category
+    }
+    collection.insert_one(new_product)
+    return {
+        "id": new_id,
+        "name": product.name,
+        "price": product.price,
+        "stock": product.stock,
+        "category": product.category
+    }
 
 # Ürün getirme
 @app.get("/products/{product_id}")

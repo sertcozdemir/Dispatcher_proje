@@ -1,23 +1,41 @@
 from fastapi import FastAPI,HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Dict
 from pymongo import MongoClient
+from fastapi.responses import JSONResponse
 
 app=FastAPI()
 
-client= MongoClient("mongodb://localhost:27017/")
+client= MongoClient("mongodb://mongo_user:27017/")
 db = client["user_db"]
 collection=db["users"]
 
 class User(BaseModel):
+    name:str
+    email:str
+class UserResponse(BaseModel):
     id:int
     name:str
-@app.post("/users",status_code=201)
+    email:str
+
+@app.post("/users",status_code=201,response_model=UserResponse,responses={201:{"description":"User Created Succesfully"}}, summary="Create User")
 def create_user(user: User):
-    if collection.find_one({"id": user.id}):
-        raise HTTPException(status_code=400, detail="User already exists")
-    collection.insert_one(user.model_dump())
-    return user
+    last_user=collection.find_one(sort=[("id",-1)])
+    new_id=1 if last_user is None else last_user["id"] + 1
+
+    new_user={
+        "id":new_id,
+        "name":user.name,
+        "email":user.email
+    }
+    result = collection.insert_one(new_user)
+    new_user["_id"]= str(result.inserted_id)
+    new_user.pop("_id",None)
+    return {
+        "id": new_id,
+        "name":user.name,
+        "email":user.email
+    }
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
     user = collection.find_one({"id": user_id}, {"_id": 0})
