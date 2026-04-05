@@ -23,6 +23,9 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
 - MongoDB(User,Product database)
 - Docker.
 
+- Sistem mimarisi diyagramı
+<img width="1670" height="603" alt="mermaid-diagram (1)" src="https://github.com/user-attachments/assets/f0d8a198-afea-449b-a80c-032942a9426c" />
+
 4.Mikroservisler ve Görevleri
 
   4.1 Dispatcher(API Gateway)
@@ -105,4 +108,38 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
   kayıt altına alınmıştır.
 
 Bu sayede sistem trafiği analiz edilmiş ve servisler arası iletişim doğrulanmıştır.
+
+9. Yük Testi (Performance Test)
+
+Sistem performansı k6 aracı ile test edilmiştir.
+
+Test sırasında:
+
+10 → 50 → 100 sanal kullanıcı (VUs) kullanılmıştır
+
+Dispatcher üzerinden User ve Product servislerine istek atılmıştır
+
+Test Sonuçları:
+
+Hata oranı: %0
+
+Ortalama yanıt süresi: ~327 ms
+
+yüzdelik dilim: ~921 ms
+
+Tüm istekler başarıyla tamamlanmıştır
+
+Bu sonuçlar sistemin yüksek yük altında stabil çalıştığını göstermektedir.
+API Arayüzü
+<img width="1891" height="956" alt="API Arayüzü" src="https://github.com/user-attachments/assets/274f45e3-2909-454d-bee7-1233694930e2" />
+
+Loglar
+<img width="1126" height="360" alt="log görüntü" src="https://github.com/user-attachments/assets/dda9956d-19aa-4f66-a9e4-a11e3e64d986" />
+
+K6 Yük testi sonucu
+
+<img width="1127" height="912" alt="k6 görüntü tamam" src="https://github.com/user-attachments/assets/05eafcf4-2b78-4cc7-9b42-c95c89949209" />
+
+Mermaid kullanarak akış diyagramı
+<img width="1244" height="2532" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/ad197735-edd5-44c3-b9cd-7376a83bcd03" />
 
