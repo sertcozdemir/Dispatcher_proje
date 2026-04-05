@@ -26,31 +26,49 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
 4.Mikroservisler ve Görevleri
 
   4.1 Dispatcher(API Gateway)
+  
   -Sistemin giriş noktasıdır
+  
   -Gelen istekleri karşılar
+  
   -Authorization(token kontrol) yapar.
+  
   -İstekleri ilgili servislere yönlendirir
+  
   -Log tutar.
   
   4.2 Auth Service
+  
   -Token doğrulama işlemini gerçekleştirir
+  
   -Dispatcherdan gelen tokenları kontrol eder
+  
   -Geçerli token için 200 geçersiz için 401 döner
   
   4.3 User Service
+  
   -Kullanıcı Oluşturma (POST)
+  
   -Kullanıcı sorgulama(GET)
+  
   -MongoDB üzerinde veri saklama
   
   4.4 Product Service
+  
   -Ürün oluşturma (POST)
+  
   -Ürün sorgulama (GET)
+  
   -MongoDB üzerinde veri saklama
   
   5.Veritabanı yapısı
+  
   -Projede NoSQL Veritabanı olarak MongoDB kullandık.
+  
   user_service -> user_db
+  
   product_service -> product_db
+  
   Her mikroservis kendi veri tabanına sahiptir. Bu sayede servisler birbirinden bağımsızdır ve veri izolasyonu sağlanmıştır.
   
   6. Docker ve Ağ Yapısı
@@ -58,12 +76,17 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
   Sistemde tüm servisler Docker container olarak çalıştırılmıştır.
 
   -Dispatcher dış dünyaya açıktır (port 8000)
+  
   -Diğer servisler internal network üzerinden erişilir
+  
   -docker-compose ile tüm yapı orkestre edilmiştir
+  
   -Servisler micro_net ağı üzerinden haberleşmektedir
+  
   7. Richardson Maturity Model (RMM)
 
   -Geliştirilen sistem RMM Level 2 seviyesindedir.
+  
   -Kaynak tabanlı endpoint yapısı vardır (/users, /products)
   -HTTP metodları doğru kullanılmıştır (GET, POST)
 
