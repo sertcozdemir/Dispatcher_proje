@@ -21,7 +21,8 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
 - User Service
 - Product Service
 - MongoDB(User,Product database)
-- Docker
+- Docker.
+
 4.Mikroservisler ve Görevleri
   4.1 Dispatcher(API Gateway)
   -Sistemin giriş noktasıdır
@@ -29,6 +30,7 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
   -Authorization(token kontrol) yapar.
   -İstekleri ilgili servislere yönlendirir
   -Log tutar.
+  
   4.2 Auth Service
   -Token doğrulama işlemini gerçekleştirir
   -Dispatcherdan gelen tokenları kontrol eder
