@@ -24,6 +24,7 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
 - Docker.
 
 4.Mikroservisler ve Görevleri
+
   4.1 Dispatcher(API Gateway)
   -Sistemin giriş noktasıdır
   -Gelen istekleri karşılar
