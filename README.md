@@ -1,10 +1,10 @@
 # Dispatcher_proje
 MİKROSERVİS  TABANLI DİSPATCHER(API GATEWAY) SİSTEMİ
-1.GİRİŞ
+# 1.GİRİŞ
 
 Bu projede,mikroservis mimarisi kullanılarak kullanıcı ve ürün işlemlerini yöneten bir sistem geliştirdik.Sistem, tüm istemci isteklerini tek bir noktadan karşılayan bir Dispatcher(API Gateway) uzerinden çalışmaktadır.Bu yapı sayesinde servisler birbirinden bağımsız hale (network isolation) gelmiştir.Bu projede amaçladığımız şey de buydu.
 
-2.AMAÇ
+# 2.AMAÇ #
 Bu projenin amacı:
 -Mikroservis mimarisini uygulamak
 -Dispatcher mantığını kurmak
@@ -14,7 +14,7 @@ Bu projenin amacı:
 -Docker ile sistemi tek komutta bütün mikroservisler ve dispatcher çalışacak şekilde tasarlamak.
 -Yük testi(k6) ve loglar ile sistemi gözlemlemek
 
-3.Sistem Mimarisi
+# 3.Sistem Mimarisi
 Sistem aşağıdaki bileşenlerden oluşmaktadır:
 - Dispatcher
 - Auth Service
@@ -26,9 +26,9 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
 - Sistem mimarisi diyagramı
 <img width="1670" height="603" alt="mermaid-diagram (1)" src="https://github.com/user-attachments/assets/f0d8a198-afea-449b-a80c-032942a9426c" />
 
-4.Mikroservisler ve Görevleri
+# 4.Mikroservisler ve Görevleri
 
-  4.1 Dispatcher(API Gateway)
+   4.1 Dispatcher(API Gateway)
   
   -Sistemin giriş noktasıdır
   
@@ -64,7 +64,7 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
   
   -MongoDB üzerinde veri saklama
   
-  5.Veritabanı yapısı
+  # 5.Veritabanı yapısı
   
   -Projede NoSQL Veritabanı olarak MongoDB kullandık.
   
@@ -74,7 +74,7 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
   
   Her mikroservis kendi veri tabanına sahiptir. Bu sayede servisler birbirinden bağımsızdır ve veri izolasyonu sağlanmıştır.
   
-  6. Docker ve Ağ Yapısı
+  # 6. Docker ve Ağ Yapısı
 
   Sistemde tüm servisler Docker container olarak çalıştırılmıştır.
 
@@ -86,14 +86,14 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
   
   -Servisler micro_net ağı üzerinden haberleşmektedir
   
-  7. Richardson Maturity Model (RMM)
+  # 7. Richardson Maturity Model (RMM)
 
   -Geliştirilen sistem RMM Level 2 seviyesindedir.
   
   -Kaynak tabanlı endpoint yapısı vardır (/users, /products)
   -HTTP metodları doğru kullanılmıştır (GET, POST)
 
-  8. Trafik İzleme ve Loglama
+  # 8. Trafik İzleme ve Loglama
 
   -Dispatcher servisinde tüm istekler loglanmıştır.
 
@@ -109,7 +109,7 @@ Sistem aşağıdaki bileşenlerden oluşmaktadır:
 
 Bu sayede sistem trafiği analiz edilmiş ve servisler arası iletişim doğrulanmıştır.
 
-9. Yük Testi (Performance Test)
+# 9. Yük Testi (Performance Test)
 
 Sistem performansı k6 aracı ile test edilmiştir.
 
